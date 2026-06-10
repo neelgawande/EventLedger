@@ -1,8 +1,8 @@
+import { v4 as uuidv4 } from 'uuid';
+import { sha256 } from '../../crypto/hash.js';
+import { stableStringify } from "../../crypto/stringify.js";
+import { EventModel } from './event.model.js';
 import { CreateEventRequest } from "./event.types.js";
-import { v4 as uuidv4 } from 'uuid'
-import { EventModel } from './event.model.js'
-import { sha256 } from '../../crypto/hash.js'
-import { stableStringify } from "../../crypto/stringify.js"
 
 
 export class EventService {
@@ -24,4 +24,8 @@ export class EventService {
         console.log(event)
         return event
     }
+    async getEventById(eventId:string) {
+        return await EventModel.findOne({eventId})
+    }
+    
 }
