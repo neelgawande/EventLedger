@@ -13,4 +13,21 @@ export class BatchController {
 		}
 		res.status(201).json(batch)
 	}
+
+	async fixOrphans(req:Request,res:Response){
+		const result=await batchService.fixOrphanEvents()
+		res.json(result)
+	}
+	
+	async delete(req:Request,res:Response){
+		const result=await batchService.deleteBatch(req.params.batchId.toString())
+
+		if(!result){
+			return res.status(404).json({
+				message:"Batch not found"
+			})
+		}
+
+		res.json(result)
+	}
 }
