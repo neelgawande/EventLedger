@@ -21,7 +21,6 @@ export class EventService {
             timestamp,
             batchId:null
         })
-        console.log(event)
         return event
     }
     async getEventById(eventId:string) {
