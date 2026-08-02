@@ -30,4 +30,13 @@ export class BatchController {
 
 		res.json(result)
 	}
+	async getById(req:Request,res:Response) {
+		const batch=await batchService.getBatchById(req.params.batchId.toString())
+		if(!batch){
+			return res.status(404).json({
+				message:"Batch not found"
+			})
+		}
+		res.json(batch)
+	}
 }

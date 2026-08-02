@@ -61,4 +61,7 @@ export class BatchService {
 			createdAt
 		})
 	}
+	async getBatchById(batchId:string) {
+        return await BatchModel.findOne({batchId})
+    }
 }
