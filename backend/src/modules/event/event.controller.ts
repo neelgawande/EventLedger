@@ -9,7 +9,7 @@ export class EventController {
         const parsed = createEventSchema.safeParse(req.body)
         if(!parsed.success){
             return res.status(400).json({
-                message:"Invalid request",
+                message:"Invalid requesto",
                 errors:parsed.error.issues
             })
         }

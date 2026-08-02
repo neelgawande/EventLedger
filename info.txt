@@ -1,1 +1,45 @@
-Verifiable Event Ledger for Multi-Service Microservices: cryptographically verifiable audit log system for distributed microservices using blockchain as a trust anchor
+Verifiable Event Ledger for Multi-Service Microservices: cryptographically verifiable audit log system for distributed
+ microservices using blockchain as a trust anchor
+
+Multiple backend services generate events.
+Events are stored in MongoDB.
+Events are periodically grouped into immutable batches.
+Each batch gets a Merkle Root.
+That Merkle Root is anchored to a blockchain.
+Later, anyone can cryptographically verify that an event has not been altered, deleted, or moved.
+
+Microservices
+      │
+      ▼
+ POST /events
+      │
+      ▼
+ MongoDB (events)
+      │
+      ▼
+ Create Batch
+      │
+      ▼
+ Merkle Tree
+      │
+      ▼
+ Merkle Root
+      │
+      ▼
+ Smart Contract
+      │
+      ▼
+ Blockchain
+      │
+      ▼
+ Verification API
+      │
+      ▼
+ Dashboard
+
+
+ 1. batch.routes.ts => Which URL calls which function
+ 2. batch.controller.ts => Receive the HTTP request and return the HTTP response.
+ 3. batch.service.ts => The business logic.
+ 4. batch.model.ts => database and data model
+ 5. batch.types.ts => for TS
