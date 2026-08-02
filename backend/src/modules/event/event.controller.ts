@@ -1,5 +1,5 @@
-import {Request, Response} from 'express'
-import { EventService} from './event.service.js'
+import { Request, Response } from 'express'
+import { EventService } from './event.service.js'
 import { createEventSchema } from "./event.validation.js"
 
 const eventService = new EventService()
@@ -24,5 +24,15 @@ export class EventController {
             })
         }
         res.json(event)
+    }
+    /*THE FOLLOWING IS ONLY INTENDED FOR DEBUG PURPOSES */
+    async delete(req:Request,res:Response){
+        const result=await eventService.deleteEventDebug(req.params.eventId.toString())
+        if(!result){
+            return res.status(404).json({
+                message:"Event not found"
+            })
+        }
+        res.json(result)
     }
 }

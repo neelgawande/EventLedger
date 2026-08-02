@@ -3,6 +3,7 @@ import { sha256 } from '../../crypto/hash.js';
 import { stableStringify } from "../../crypto/stringify.js";
 import { EventModel } from './event.model.js';
 import { CreateEventRequest } from "./event.types.js";
+import { BatchModel } from "../batch/batch.model.js"
 
 
 export class EventService {
@@ -25,6 +26,30 @@ export class EventService {
     }
     async getEventById(eventId:string) {
         return await EventModel.findOne({eventId})
+    }
+
+    /*THE FOLLOWING IS ONLY INTENDED FOR DEBUG PURPOSES */
+    async deleteEventDebug(eventId:string){
+        const event=await EventModel.findOne({eventId})
+        if(!event){
+            return null
+        }
+        if(event.batchId){
+            const batch=await BatchModel.findOne({batchId:event.batchId})
+            if(batch){
+                const index=batch.eventIds.indexOf(eventId)
+                if(index!==-1){
+                    batch.eventIds.splice(index,1)
+                    batch.eventHashes.splice(index,1)
+                    await batch.save()
+                }
+            }
+        }
+        await EventModel.deleteOne({eventId})
+        return {
+            deleted:true,
+            eventId
+        }
     }
     
 }
