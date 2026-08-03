@@ -78,3 +78,25 @@ export function generateProof(
     }
     return proof
 }
+
+export function verifyProof(
+    leaf:string,
+    proof:MerkleProof,
+    root:string
+):boolean{
+
+    let hash=leaf
+
+    for(const node of proof.nodes){
+
+        if(node.position==="left"){
+            hash=hashPair(node.hash,hash)
+        }
+        else{
+            hash=hashPair(hash,node.hash)
+        }
+
+    }
+
+    return hash===root
+}

@@ -1,0 +1,26 @@
+1. Find the event.
+
+2. If it doesn't exist:
+      return Event not found.
+
+3. If batchId is null:
+      return Event is not batched.
+
+4. Find the batch.
+
+5. If batch doesn't exist:
+      return Batch not found.
+
+6. Find the index of the eventHash inside batch.eventHashes.
+
+7. Build the Merkle tree from batch.eventHashes.
+
+8. Generate the proof.
+
+9. Verify the proof against batch.merkleRoot.
+
+10. Return:
+    - verified
+    - batchId
+    - merkleRoot
+    - proof
