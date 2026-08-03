@@ -1,6 +1,6 @@
+import { buildMerkleTree, generateProof, verifyProof } from "../../crypto/merkleTree.js"
 import { BatchModel } from "../batch/batch.model.js"
 import { EventModel } from "../event/event.model.js"
-import { buildMerkleTree } from "../../crypto/merkleTree.js"
 
 export class VerificationService {
 
@@ -35,10 +35,15 @@ export class VerificationService {
             }
         }
         const tree=buildMerkleTree(batch.eventHashes)
+        console.log("Stored Root :", batch.merkleRoot)
+        console.log("Built Root  :", tree.root)
+        const proof=generateProof(tree,leafIndex)
+        const verified=verifyProof(event.eventHash,proof,batch.merkleRoot)
         return{
-            verified:true,
+            verified,
             event,
-            batch
+            batch,
+            proof
         }
     } // end of verifyEvent()
 
