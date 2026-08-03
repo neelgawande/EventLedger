@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from "uuid"
 import { BatchModel } from "./batch.model.js"
 import { EventModel } from "../event/event.model.js"
-import { buildMerkleRoot } from "../../crypto/merkleTree.js"
+import { buildMerkleTree } from "../../crypto/merkleTree.js"
 
 export class BatchService {
 	async fixOrphanEvents(){
@@ -46,7 +46,7 @@ export class BatchService {
 		const batchId=uuidv4()
 		const eventIds=events.map(event=>event.eventId)
 		const eventHashes=events.map(e=>e.eventHash)
-		const merkleRoot=buildMerkleRoot(eventHashes)
+		const merkleRoot=buildMerkleTree(eventHashes).root
 		const createdAt=new Date().toISOString()
 		await EventModel.updateMany(
 			{eventId:{$in:eventIds}},
